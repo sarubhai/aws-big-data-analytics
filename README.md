@@ -30,11 +30,11 @@ All instances will be deployed in Private Subnet.
 
 ## Athena
 
-Refer to ![File](bigdata-query-athena.sql "Athena Bigdata Query")
+Refer to [Athena Bigdata Query](bigdata-query-athena.sql "Athena Bigdata Query")
 
 ## Redshift
 
-Create the tables & analyze data using Redshift. Refer to ![File](bigdata-query-redshift.sql "Redshift Bigdata Query")
+Create the tables & analyze data using Redshift. Refer to [Redshift Bigdata Query](bigdata-query-redshift.sql "Redshift Bigdata Query")
 
 ## Visualize Data using Metabase
 
