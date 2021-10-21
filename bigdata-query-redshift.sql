@@ -95,7 +95,7 @@ create table car.sales (
   customer_id INTEGER NOT NULL,
   showroom_id INTEGER NOT NULL,
   product_id INTEGER NOT NULL DISTKEY,
-  quantity VARCHAR(50) NOT NULL,
+  quantity INTEGER NOT NULL,
   discount INTEGER,
   amount INTEGER,
   delivered VARCHAR(50),
