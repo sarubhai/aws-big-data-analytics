@@ -144,6 +144,36 @@ variable "emr_ebs_root_volume_size" {
 }
 
 
+# Kinesis
+
+# Twitter
+variable "twitter_instance_type" {
+  description = "The Twitter Server Instance."
+  default     = "t2.micro"
+}
+
+variable "consumer_key" {
+  description = "The Twitter API Consumer Key."
+}
+
+variable "consumer_secret" {
+  description = "The Twitter API Consumer Key Secret."
+}
+
+variable "access_token" {
+  description = "The Twitter API Access Token."
+}
+
+variable "access_token_secret" {
+  description = "The Twitter API Access Token Secret."
+}
+
+variable "twitter_filter_tag" {
+  description = "The Twitter Tweet Filter Hashtag."
+  default     = "#Covid19"
+}
+
+
 # OpenVPN Access Server
 variable "openvpn_server_ami_name" {
   description = "The OpenVPN Access Server AMI Name."

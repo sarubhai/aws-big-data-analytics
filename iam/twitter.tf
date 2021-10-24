@@ -1,11 +1,11 @@
-# Name: datagen.tf
+# Name: twitter.tf
 # Owner: Saurav Mitra
-# Description: This terraform config will create IAM Policies & Roles for BigData Generation Instance
+# Description: This terraform config will create IAM Policies & Roles for Twitter Instance
 
-resource "aws_iam_policy" "datagen_policy" {
-  name        = "datagen-policy"
+resource "aws_iam_policy" "twitter_policy" {
+  name        = "twitter-policy"
   path        = "/"
-  description = "This policy will allow an EC2 instance to write objects to bigdatagen bucket in S3. It will also allow to terminate the instance after work done."
+  description = "This policy will allow an EC2 instance to read objects from bigdatagen bucket in S3, and put records into Kinesis"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -30,9 +30,7 @@ resource "aws_iam_policy" "datagen_policy" {
       {
         "Effect" : "Allow",
         "Action" : [
-          "s3:PutObject",
           "s3:GetObject",
-          "s3:DeleteObject"
         ],
         "Resource" : [
           "${var.s3_datagen_bucket_arn}/*"
@@ -41,29 +39,26 @@ resource "aws_iam_policy" "datagen_policy" {
       {
         "Effect" : "Allow",
         "Action" : [
-          "ec2:StopInstances",
-          "ec2:TerminateInstances"
+          "kinesis:PutRecord",
+          "kinesis:PutRecords",
+          "kinesis:DescribeStream",
+          "iam:SimulatePrincipalPolicy",
         ],
         "Resource" : [
-          "arn:aws:ec2:*:*:instance/*"
-        ],
-        "Condition" : {
-          "StringEquals" : {
-            "aws:ResourceTag/Name" : "BigDataGenerator"
-          }
-        },
+          "*"
+        ]
       }
     ]
   })
 
   tags = {
-    Name  = "datagen-policy"
+    Name  = "twitter-policy"
     Owner = var.owner
   }
 }
 
-resource "aws_iam_role" "datagen_role" {
-  name        = "datagen-role"
+resource "aws_iam_role" "twitter_role" {
+  name        = "twitter-role"
   description = "Allows EC2 instances to call AWS services on your behalf."
 
   assume_role_policy = jsonencode({
@@ -81,16 +76,16 @@ resource "aws_iam_role" "datagen_role" {
   })
 
   managed_policy_arns = [
-    aws_iam_policy.datagen_policy.arn
+    aws_iam_policy.twitter_policy.arn
   ]
 
   tags = {
-    Name  = "datagen-role"
+    Name  = "twitter-role"
     Owner = var.owner
   }
 }
 
-resource "aws_iam_instance_profile" "datagen_instance_profile" {
-  name = "datagen-role"
-  role = aws_iam_role.datagen_role.name
+resource "aws_iam_instance_profile" "twitter_instance_profile" {
+  name = "twitter-role"
+  role = aws_iam_role.twitter_role.name
 }

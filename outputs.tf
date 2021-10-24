@@ -71,6 +71,13 @@ output "emr_master_public_dns" {
 }
 
 
+# Kinesis
+output "twitter_server_ip" {
+  value       = module.kinesis.twitter_server_ip
+  description = "Twitter Server IP."
+}
+
+
 # OpenVPN Access Server
 output "openvpn_access_server_ip" {
   value       = "https://${module.openvpn.openvpn_access_server_ip}:943/"

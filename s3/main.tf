@@ -61,6 +61,7 @@ resource "aws_s3_bucket_object" "dataset_files" {
   etag   = filemd5("${path.module}/${each.value}")
 }
 
+
 # Upload Hive Script Files
 resource "aws_s3_bucket_object" "hive_script_files" {
   for_each = fileset(path.module, "scripts/*.hql")
@@ -86,6 +87,18 @@ resource "aws_s3_bucket_object" "pig_script_files" {
 # Upload Python Spark Files
 resource "aws_s3_bucket_object" "spark_script_files" {
   for_each = fileset(path.module, "scripts/*.py")
+
+  bucket = aws_s3_bucket.datagen_bucket.id
+  acl    = "private"
+  key    = each.value
+  source = "${path.module}/${each.value}"
+  etag   = filemd5("${path.module}/${each.value}")
+}
+
+
+# Upload Twitter Python Files
+resource "aws_s3_bucket_object" "twitter_script_files" {
+  for_each = fileset(path.module, "twitter/*.*")
 
   bucket = aws_s3_bucket.datagen_bucket.id
   acl    = "private"

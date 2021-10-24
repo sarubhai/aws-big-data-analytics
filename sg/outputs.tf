@@ -31,3 +31,8 @@ output "metabase_sg_id" {
   value       = aws_security_group.metabase_sg.id
   description = "Security Group for Metabase Server."
 }
+
+output "twitter_sg_id" {
+  value       = aws_security_group.twitter_sg.id
+  description = "Security Group for Twitter Server."
+}

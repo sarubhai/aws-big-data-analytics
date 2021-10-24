@@ -93,6 +93,7 @@ module "redshift" {
 }
 
 
+
 # Metabase Server
 module "metabase" {
   source                 = "./metabase"
@@ -137,6 +138,35 @@ module "emr" {
   keypair_name                 = var.keypair_name
   s3_emr_log_bucket_name       = module.s3.s3_emr_log_bucket_name
   s3_datagen_bucket_name       = module.s3.s3_datagen_bucket_name
+}
+
+
+
+# Kinesis
+module "kinesis" {
+  source                           = "./kinesis"
+  prefix                           = var.prefix
+  owner                            = var.owner
+  region                           = var.region
+  vpc_id                           = module.vpc.vpc_id
+  public_subnet_id                 = module.vpc.public_subnet_id
+  private_subnet_id                = module.vpc.private_subnet_id
+  vpc_cidr_block                   = var.vpc_cidr_block
+  internet_cidr_block              = var.internet_cidr_block
+  twitter_sg_id                    = module.sg.twitter_sg_id
+  twitter_instance_type            = var.twitter_instance_type
+  keypair_name                     = var.keypair_name
+  s3_twitter_instance_profile_name = module.iam.s3_twitter_instance_profile_name
+  kinesis_firehose_role_arn        = module.iam.kinesis_firehose_role_arn
+  kinesis_analytics_role_arn       = module.iam.kinesis_analytics_role_arn
+  s3_datagen_bucket_name           = module.s3.s3_datagen_bucket_name
+  s3_resultset_bucket_name         = module.s3.s3_resultset_bucket_name
+  s3_resultset_bucket_arn          = module.s3.s3_resultset_bucket_arn
+  consumer_key                     = var.consumer_key
+  consumer_secret                  = var.consumer_secret
+  access_token                     = var.access_token
+  access_token_secret              = var.access_token_secret
+  twitter_filter_tag               = var.twitter_filter_tag
 }
 
 

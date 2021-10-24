@@ -33,3 +33,24 @@ output "emr_auto_scaling_role_arn" {
   value       = aws_iam_role.emr_auto_scaling_role.arn
   description = "EMR Auto Scaling IAM Role ARN."
 }
+
+
+output "s3_twitter_role_arn" {
+  value       = aws_iam_role.twitter_role.arn
+  description = "Twitter S3 Access IAM Role ARN."
+}
+
+output "s3_twitter_instance_profile_name" {
+  value       = aws_iam_instance_profile.twitter_instance_profile.name
+  description = "Twitter S3 Access IAM Instance Profile Name."
+}
+
+output "kinesis_firehose_role_arn" {
+  value       = aws_iam_role.kinesis_firehose_role.arn
+  description = "Kinesis Firehose IAM Role ARN."
+}
+
+output "kinesis_analytics_role_arn" {
+  value       = aws_iam_role.kinesis_analytics_role.arn
+  description = "Kinesis Analytics IAM Role ARN."
+}

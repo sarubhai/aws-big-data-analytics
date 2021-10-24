@@ -1,4 +1,4 @@
-# Name: main.tf
+# Name: redshift.tf
 # Owner: Saurav Mitra
 # Description: This terraform config will create IAM Policies & Roles for Redshift Cluster
 
