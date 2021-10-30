@@ -173,6 +173,32 @@ variable "twitter_filter_tag" {
   default     = "#Covid19"
 }
 
+# MSK
+variable "kafka_version" {
+  description = "The Kafka Version."
+  default     = "2.6.2"
+}
+
+variable "kafka_number_of_nodes" {
+  description = "The Number of Nodes in the Kafka Cluster."
+  default     = 3
+}
+
+variable "kafka_instance_type" {
+  description = "The Kafka Node Instance Type."
+  default     = "kafka.m5.large"
+}
+
+variable "kafka_ebs_volume_size" {
+  description = "The Kafka Node EBS Volume GB."
+  default     = 100
+}
+
+variable "twitter_kafka_topic_name" {
+  description = "The Kafka Topic Name."
+  default     = "tweets"
+}
+
 
 # OpenVPN Access Server
 variable "openvpn_server_ami_name" {

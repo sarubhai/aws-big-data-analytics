@@ -1,4 +1,4 @@
-# Name: kinesis.tf
+# Name: main.tf
 # Owner: Saurav Mitra
 # Description: This terraform config will create Kinesis resources
 

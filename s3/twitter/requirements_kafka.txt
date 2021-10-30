@@ -1,0 +1,4 @@
+# Python Packages
+boto3
+tweepy
+kafka-python

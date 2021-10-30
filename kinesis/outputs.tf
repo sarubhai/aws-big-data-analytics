@@ -1,8 +1,8 @@
 # Name: outputs.tf
 # Owner: Saurav Mitra
-# Description: Outputs the EC2 Instance IP
+# Description: Outputs the Kinesis Stream Name
 
-output "twitter_server_ip" {
-  value       = aws_instance.twitter_server.private_ip
-  description = "Twitter Server IP."
+output "twitter_kinesis_stream_name" {
+  value       = aws_kinesis_stream.twitter_kds.name
+  description = "Kinesis Stream Name."
 }

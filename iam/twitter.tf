@@ -5,7 +5,7 @@
 resource "aws_iam_policy" "twitter_policy" {
   name        = "twitter-policy"
   path        = "/"
-  description = "This policy will allow an EC2 instance to read objects from bigdatagen bucket in S3, and put records into Kinesis"
+  description = "This policy will allow an EC2 instance to read objects from bigdatagen bucket in S3, and put records into Kinesis & MSK"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -43,6 +43,15 @@ resource "aws_iam_policy" "twitter_policy" {
           "kinesis:PutRecords",
           "kinesis:DescribeStream",
           "iam:SimulatePrincipalPolicy",
+        ],
+        "Resource" : [
+          "*"
+        ]
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "kafka-cluster:*"
         ],
         "Resource" : [
           "*"

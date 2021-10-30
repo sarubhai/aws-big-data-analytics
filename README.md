@@ -26,6 +26,8 @@ The following AWS resources will be deployed by Terraform:
 - 1 Kinesis Data Stream
 - 2 Kinesis Data Firehouse
 - 1 Kinesis Data Analytics
+- 1 EC2 Instance as Twitter Server to fetch tweets from Twitter & write records to MSK Cluster (with corresponding Security Group, IAM & SSH Key)
+- 1 MSK Cluster
 - 1 OpenVPN Access Server
 
 ^ This server will be self destroyed after the TPCH data generation completes.
@@ -96,6 +98,12 @@ export AWS_DEFAULT_REGION="us-east-2"
 - terraform plan
 - terraform apply -auto-approve -refresh=false
 - Finally browse the AWS Management Console and explore the other services.
+
+### OpenVPN Access Server
+
+- Login to openvpn_access_server_ip with user as openvpn & vpn_admin_password
+- Download the VPN connection profile
+- Download & use OpenVPN client to connect to AWS VPC.
 
 ### Destroy Resources
 

@@ -40,7 +40,7 @@ module "sg" {
 }
 
 
-
+/*
 # Big Data generator Instances
 module "datagen" {
   source                           = "./datagen"
@@ -142,9 +142,20 @@ module "emr" {
 
 
 
-# Kinesis
+# Kinesis With Twitter
 module "kinesis" {
-  source                           = "./kinesis"
+  source                     = "./kinesis"
+  prefix                     = var.prefix
+  owner                      = var.owner
+  kinesis_firehose_role_arn  = module.iam.kinesis_firehose_role_arn
+  kinesis_analytics_role_arn = module.iam.kinesis_analytics_role_arn
+  s3_datagen_bucket_name     = module.s3.s3_datagen_bucket_name
+  s3_resultset_bucket_name   = module.s3.s3_resultset_bucket_name
+  s3_resultset_bucket_arn    = module.s3.s3_resultset_bucket_arn
+}
+
+module "twitter_kinesis" {
+  source                           = "./twitter_kinesis"
   prefix                           = var.prefix
   owner                            = var.owner
   region                           = var.region
@@ -157,8 +168,6 @@ module "kinesis" {
   twitter_instance_type            = var.twitter_instance_type
   keypair_name                     = var.keypair_name
   s3_twitter_instance_profile_name = module.iam.s3_twitter_instance_profile_name
-  kinesis_firehose_role_arn        = module.iam.kinesis_firehose_role_arn
-  kinesis_analytics_role_arn       = module.iam.kinesis_analytics_role_arn
   s3_datagen_bucket_name           = module.s3.s3_datagen_bucket_name
   s3_resultset_bucket_name         = module.s3.s3_resultset_bucket_name
   s3_resultset_bucket_arn          = module.s3.s3_resultset_bucket_arn
@@ -167,6 +176,52 @@ module "kinesis" {
   access_token                     = var.access_token
   access_token_secret              = var.access_token_secret
   twitter_filter_tag               = var.twitter_filter_tag
+  twitter_kinesis_stream_name      = module.kinesis.twitter_kinesis_stream_name
+}
+*/
+
+
+# MSK with Twitter
+module "msk" {
+  source                   = "./msk"
+  prefix                   = var.prefix
+  owner                    = var.owner
+  vpc_cidr_block           = var.vpc_cidr_block
+  private_subnet_id        = module.vpc.private_subnet_id
+  vpc_id                   = module.vpc.vpc_id
+  kafka_sg_id              = module.sg.msk_sg_id
+  kafka_version            = var.kafka_version
+  kafka_number_of_nodes    = var.kafka_number_of_nodes
+  kafka_instance_type      = var.kafka_instance_type
+  kafka_ebs_volume_size    = var.kafka_ebs_volume_size
+  s3_datagen_bucket_name   = module.s3.s3_datagen_bucket_name
+  s3_resultset_bucket_name = module.s3.s3_resultset_bucket_name
+}
+
+module "twitter_msk" {
+  source                           = "./twitter_msk"
+  prefix                           = var.prefix
+  owner                            = var.owner
+  region                           = var.region
+  vpc_id                           = module.vpc.vpc_id
+  public_subnet_id                 = module.vpc.public_subnet_id
+  private_subnet_id                = module.vpc.private_subnet_id
+  vpc_cidr_block                   = var.vpc_cidr_block
+  internet_cidr_block              = var.internet_cidr_block
+  twitter_sg_id                    = module.sg.twitter_sg_id
+  twitter_instance_type            = var.twitter_instance_type
+  keypair_name                     = var.keypair_name
+  s3_twitter_instance_profile_name = module.iam.s3_twitter_instance_profile_name
+  s3_datagen_bucket_name           = module.s3.s3_datagen_bucket_name
+  s3_resultset_bucket_name         = module.s3.s3_resultset_bucket_name
+  s3_resultset_bucket_arn          = module.s3.s3_resultset_bucket_arn
+  consumer_key                     = var.consumer_key
+  consumer_secret                  = var.consumer_secret
+  access_token                     = var.access_token
+  access_token_secret              = var.access_token_secret
+  twitter_filter_tag               = var.twitter_filter_tag
+  kafka_bootstrap_servers          = module.msk.kafka_bootstrap_servers
+  twitter_kafka_topic_name         = var.twitter_kafka_topic_name
 }
 
 

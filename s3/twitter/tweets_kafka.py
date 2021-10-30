@@ -1,17 +1,16 @@
-import boto3
 import json
 import os
 import tweepy
-import uuid
+from kafka import KafkaProducer
 
 consumer_key = os.environ['CONSUMER_KEY']
 consumer_secret = os.environ['CONSUMER_SECRET']
 access_token = os.environ['ACCESS_TOKEN']
 access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
-
-kinesis_region = os.environ['KINESIS_REGION']
-kinesis_stream_name = os.environ['KINESIS_STREAM_NAME']
 twitter_filter_tag = os.environ['TWITTER_FILTER_TAG']
+
+bootstrap_servers = os.environ['BOOTSTRAP_SERVERS']
+kafka_topic_name = os.environ['KAFKA_TOPIC_NAME']
 
 
 class StreamingTweets(tweepy.Stream):
@@ -28,21 +27,16 @@ class StreamingTweets(tweepy.Stream):
             'tweet_body': json.dumps(status._json)
         }
 
-        response = kinesis_client.put_record(
-            StreamName=kinesis_stream_name,
-            Data=json.dumps(data),
-            PartitionKey=partition_key)
+        response = producer.send(
+            kafka_topic_name, json.dumps(data).encode('utf-8'))
 
-        print('Status: ' +
-              json.dumps(response['ResponseMetadata']['HTTPStatusCode']))
+        print((response))
 
     def on_error(self, status):
         print(status)
 
 
-session = boto3.Session()
-kinesis_client = session.client('kinesis', region_name=kinesis_region)
-partition_key = str(uuid.uuid4())
+producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
 stream = StreamingTweets(
     consumer_key, consumer_secret,

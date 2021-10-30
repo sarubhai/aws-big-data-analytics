@@ -1,4 +1,4 @@
-# Name: security_groups.tf
+# Name: redshift.tf
 # Owner: Saurav Mitra
 # Description: This terraform config will create the Security Group for Redshift Cluster
 

@@ -36,3 +36,8 @@ output "twitter_sg_id" {
   value       = aws_security_group.twitter_sg.id
   description = "Security Group for Twitter Server."
 }
+
+output "msk_sg_id" {
+  value       = aws_security_group.msk_sg.id
+  description = "Security Group for MSK Cluster."
+}
