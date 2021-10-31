@@ -21,7 +21,7 @@ output "private_subnet_id" {
 }
 */
 
-/*
+
 # Datagen
 output "datagen_server_ip" {
   value       = module.datagen.datagen_server_ip
@@ -78,7 +78,7 @@ output "twitter_kinesis_server_ip" {
   value       = module.twitter_kinesis.twitter_kinesis_server_ip
   description = "Twitter Kinesis Server IP."
 }
-*/
+
 
 # MSK
 

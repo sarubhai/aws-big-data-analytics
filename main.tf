@@ -40,7 +40,7 @@ module "sg" {
 }
 
 
-/*
+
 # Big Data generator Instances
 module "datagen" {
   source                           = "./datagen"
@@ -178,7 +178,7 @@ module "twitter_kinesis" {
   twitter_filter_tag               = var.twitter_filter_tag
   twitter_kinesis_stream_name      = module.kinesis.twitter_kinesis_stream_name
 }
-*/
+
 
 
 # MSK with Twitter
